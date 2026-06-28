@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PyUstad — Python Seekho Expert Bano</title>
+<!-- CodeMirror CSS CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/theme/dracula.min.css">
+<link rel="stylesheet" href="style.css">
+<!-- CodeMirror JS and Pyodide WebAssembly CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/mode/python/python.min.js"></script>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+</head>
+<body>
+
+<!-- Pyodide Loader Overlay -->
+<div id="pyodide-loader" class="loader-overlay">
+  <div class="loader-content">
+    <div class="loader-logo">🐍</div>
+    <h2 id="loader-title" data-translate="loaderTitle">Python Engine Load Ho Raha Hai...</h2>
+    <p id="loader-subtitle" data-translate="loaderSubtitle">Pyodide WebAssembly load hone mein 3-5 seconds lag sakte hain.</p>
+    <div class="spinner-bar"><div class="spinner-fill"></div></div>
+  </div>
+</div>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">Py<span>Ustad</span><em>.pk</em></div>
+    <div class="nav">
+      <button class="nav-btn active" onclick="goPage('home')" data-translate="navHome">🏠 Home</button>
+      <button class="nav-btn" onclick="goPage('topics')" data-translate="navTopics">📚 Topics</button>
+      <button class="nav-btn" onclick="goPage('practice')" data-translate="navPractice">💻 Practice</button>
+      <button class="nav-btn" onclick="goPage('quiz')" data-translate="navQuiz">🧠 Quiz</button>
+      <button class="nav-btn" onclick="goPage('roadmap')" data-translate="navRoadmap">🗺️ Roadmap</button>
+    </div>
+    
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div class="lang-selector">
+        <button class="lang-btn active" id="lang-ur" onclick="changeLanguage('ur')">Urdu</button>
+        <button class="lang-btn" id="lang-en" onclick="changeLanguage('en')">English</button>
+      </div>
+      <div class="streak" id="streakText">🔥 0 day streak</div>
+      <div id="authHeaderArea" style="display: flex; align-items: center;">
+        <button class="nav-btn" onclick="openAuthModal()" id="authNavBtn" data-translate="navLogin">🔑 Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOME -->
+<div id="home" class="page active">
+  <div class="hero">
+    <div class="hero-badge" data-translate="heroBadge">🇵🇰 Pakistan ka #1 Python Platform</div>
+    <h1 id="heroTitle" data-translate="heroTitle">Python Seekho,<br><span class="g1">Code Likhna</span> <span class="g2">Expert Bano</span></h1>
+    <p id="heroDesc" data-translate="heroDesc">Official Python 3.14 docs + top YouTube courses ka content — ek jagah, practice-first approach ke sath. Basic se AI/ML tak, har topic par Easy → Medium → Hard practice.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="goPage('practice')" data-translate="btnStartPractice">💻 Practice Shuru Karo</button>
+      <button class="btn-secondary" onclick="goPage('topics')" data-translate="btnViewTopics">📚 Topics Dekho</button>
+    </div>
+  </div>
+
+  <div class="diff-grid">
+    <div class="diff-card">
+      <div class="diff-icon">🎯</div>
+      <h3 data-translate="card1Title">Practice-First Approach</h3>
+      <p data-translate="card1Desc">W3Schools/Codecademy se farq — yahan har topic par Easy → Medium → Hard level ke real coding questions hain. Padhne se zyada likhne par focus.</p>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">📖</div>
+      <h3 data-translate="card2Title">Official Docs Based</h3>
+      <p data-translate="card2Desc">Python 3.14 official documentation ke har chapter ko cover karta hai. YouTube ke Corey Schafer, freeCodeCamp, Traversy Media jaise channels ka best content.</p>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">🤖</div>
+      <h3 data-translate="card3Title">AI Tutor (Claude)</h3>
+      <p data-translate="card3Desc">Koi bhi question atak jao — Claude se seedha puchho. Urdu ya English mein explain karega, step-by-step guide dega aur agle challenge pe bhejega.</p>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">🏆</div>
+      <h3 data-translate="card4Title">Real Projects</h3>
+      <p data-translate="card4Desc">SoloLearn ki tarah sirf quiz nahi — har section ke end mein ek real-world mini project banao jo tumhara portfolio mein jaye.</p>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-card"><div class="stat-num" style="color:var(--accent)" id="statSolvedCount">150+</div><div class="stat-label" data-translate="statPracticeQs">Practice Questions</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--easy)">25+</div><div class="stat-label" data-translate="statTopicsCovered">Topics Covered</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--accent3)">3</div><div class="stat-label" data-translate="statDifficultyLevels">Difficulty Levels</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--hard)">8</div><div class="stat-label" data-translate="statRealProjects">Real Projects</div></div>
+  </div>
+</div>
+
+<!-- TOPICS -->
+<div id="topics" class="page">
+  <div class="section-title" data-translate="topicsTitle">📚 Python Topics — Official Docs se</div>
+  <div class="section-sub" data-translate="topicsSub">Har topic par click karo aur practice start karo. Python 3.14 documentation ka complete coverage.</div>
+  <div class="topics-grid" id="topicsGrid"></div>
+</div>
+
+<!-- PRACTICE -->
+<div id="practice" class="page">
+  <div class="practice-layout">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <span data-translate="questionsHeader">Questions</span>
+        <span id="qcount" style="font-size:12px;color:var(--text2)">0 shown</span>
+      </div>
+      <div class="filter-row" id="diffFilters">
+        <button class="filter-btn active" onclick="filterQ('all',this)" data-translate="filterAll">All</button>
+        <button class="filter-btn" onclick="filterQ('easy',this)" style="color:var(--easy)" data-translate="filterEasy">🟢 Easy</button>
+        <button class="filter-btn" onclick="filterQ('medium',this)" style="color:var(--accent3)" data-translate="filterMedium">🟡 Medium</button>
+        <button class="filter-btn" onclick="filterQ('hard',this)" style="color:var(--hard)" data-translate="filterHard">🔴 Hard</button>
+      </div>
+      <div class="filter-row" id="topicFilters" style="border-bottom:none"></div>
+      <div id="questionList"></div>
+    </div>
+    <div class="code-panel">
+      <div class="code-panel-header">
+        <div class="q-display-title" id="qDisplayTitle" data-translate="qDisplayTitleDefault">Ek question choose karo ←</div>
+        <div class="q-diff-badge" id="qDiffBadge"></div>
+      </div>
+      <div class="q-body" id="qBody">
+        <p style="color:var(--text2)" data-translate="qBodyDefault1">Left side se koi bhi question select karo ya neeche se topic choose karo. Phir code editor mein apna solution likhkar Run karo!</p>
+        <p style="color:var(--text2);margin-top:10px" data-translate="qBodyDefault2">💡 <strong style="color:var(--accent)">Tip:</strong> Pehle khud try karo, phir Hint lo, phir Solution dekho — yahi best learning method hai!</p>
+      </div>
+      <div id="hintBox" class="hint-box"></div>
+      <div class="editor-header">
+        <div class="editor-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <span>solution.py</span>
+      </div>
+      <textarea class="code-editor" id="codeEditor" placeholder="# Yahan apna Python code likho...
+# Phir Run button dabao!
+
+"># Yahan apna Python code likho...
+# Phir Run button dabao!
+
+</textarea>
+      <div class="run-area">
+        <button class="run-btn" onclick="runCode()" data-translate="btnRunCode">▶ Run Code</button>
+        <button class="submit-btn" onclick="submitCode()" data-translate="btnSubmitCode">🚀 Submit & Test</button>
+        <button class="hint-btn" onclick="showHint()" data-translate="btnHint">💡 Hint</button>
+        <button class="sol-btn" onclick="showSolution()" data-translate="btnSolution">👁️ Solution</button>
+        <button class="sol-btn" onclick="askAI()" data-translate="btnAskAI">🤖 AI Ustad se Puchho</button>
+      </div>
+      <div class="output-area" id="outputArea" data-translate="outputAreaDefault">Output yahan aayegi...</div>
+      <div class="test-results" id="testResults">
+        <div class="test-results-header">
+          <span id="testResultsTitle">Test Results</span>
+          <span id="testResultsStatus" class="level-badge"></span>
+        </div>
+        <div class="test-cases-list" id="testCasesList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="page">
+  <div class="quiz-page-layout">
+    <div id="quizTopicSelect">
+      <div class="section-title" data-translate="quizTitle">🧠 Quiz Mode — Topic Choose Karo</div>
+      <div class="section-sub" style="margin-bottom:16px" data-translate="quizSub">Koi bhi topic select karo aur apna knowledge test karo</div>
+      <div class="quiz-topic-selector" id="quizTopicSelector"></div>
+      <button class="btn-primary" onclick="startQuiz()" style="width:100%;padding:14px" data-translate="btnStartQuiz">Quiz Shuru Karo 🚀</button>
+    </div>
+    <div id="quizArea" style="display:none">
+      <div class="quiz-top">
+        <div style="font-size:13px;color:var(--text2)" id="quizQNum">Q 1/10</div>
+        <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress" style="width:10%"></div></div>
+        <div class="quiz-score" id="quizScoreDisplay">0 ✓</div>
+      </div>
+      <div class="quiz-card">
+        <div class="quiz-topic-tag" id="qTopicTag"></div>
+        <div class="quiz-q" id="quizQ"></div>
+        <div class="quiz-code-block" id="quizCodeBlock" style="display:none"></div>
+        <div class="quiz-opts" id="quizOpts"></div>
+        <div class="quiz-feedback" id="quizFeedback"></div>
+      </div>
+      <button class="quiz-next-btn" id="quizNextBtn" onclick="nextQuizQ()" data-translate="btnNextQ">Agla Sawal →</button>
+    </div>
+    <div id="quizResult" style="display:none;text-align:center;padding:40px">
+      <div style="font-size:64px;margin-bottom:16px" id="resultEmoji">🏆</div>
+      <div style="font-size:28px;font-weight:800;margin-bottom:8px" id="resultScore"></div>
+      <div style="font-size:15px;color:var(--text2);margin-bottom:28px" id="resultMsg"></div>
+      <button class="btn-primary" onclick="resetQuiz()" style="margin-right:10px" data-translate="btnResetQuiz">Dobara Try Karo</button>
+      <button class="btn-secondary" onclick="goPage('practice')" data-translate="btnPracticeQuiz">Practice Karo</button>
+    </div>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<div id="roadmap" class="page">
+  <div class="roadmap-container">
+    <div class="section-title" data-translate="roadmapTitle">🗺️ Python Expert Banne ka Roadmap</div>
+    <div class="section-sub" data-translate="roadmapSub">Official Python docs + top YouTube channels ka combined learning path</div>
+    <div id="roadmapContainer"></div>
+  </div>
+</div>
+
+<!-- Auth Modal -->
+<div id="authModal" class="auth-modal-overlay" style="display: none;">
+  <div class="auth-modal-card">
+    <div class="auth-modal-header">
+      <h3 id="authModalTitle" data-translate="authTitleLogin">🔑 Login</h3>
+      <button class="auth-modal-close" onclick="closeAuthModal()">✕</button>
+    </div>
+    <div class="auth-modal-body">
+      <div id="authFeedback" class="auth-feedback" style="display: none;"></div>
+      <form id="authForm" onsubmit="handleAuthSubmit(event)">
+        <div class="auth-form-group">
+          <label for="authUsername" data-translate="labelUsername">Username</label>
+          <input type="text" id="authUsername" required placeholder="e.g., ali" autocomplete="username">
+        </div>
+        <div class="auth-form-group">
+          <label for="authPassword" data-translate="labelPassword">Password</label>
+          <input type="password" id="authPassword" required placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 14px;" id="authSubmitBtn" data-translate="btnSubmitLogin">Login</button>
+      </form>
+    </div>
+    <div class="auth-modal-footer">
+      <span id="authToggleText" data-translate="authToggleTextLogin">Naya account banana hai?</span>
+      <button class="auth-link-btn" onclick="toggleAuthMode()" id="authToggleBtn" data-translate="authToggleBtnLogin">Sign Up</button>
+    </div>
+  </div>
+</div>
+
+<!-- Welcome Info Modal -->
+<div id="welcomeModal" class="auth-modal-overlay" style="display: none;">
+  <div class="auth-modal-card" style="max-width: 420px; text-align: center;">
+    <div class="loader-logo" style="font-size: 48px; margin-bottom: 12px; animation: float-logo 2s ease-in-out infinite;">👋</div>
+    <h3 style="margin-bottom: 12px; font-size: 20px; font-weight: 700; color: var(--text);" id="welcomeTitle" data-translate="welcomeTitle">PyUstad pe Khush Amdeed!</h3>
+    <p style="font-size: 13.5px; color: var(--text2); line-height: 1.6; margin-bottom: 20px;" id="welcomeDesc" data-translate="welcomeDesc">
+      Agar aap local account bana kar Login karenge, toh aapki practice progress, streaks aur solved questions browser mein automatic save hotay rahenge. Bina login ke bhi aap seekh saktay hain, lekin data track nahi hoga. Aapki marzi hai abhi login karein ya baad mein!
+    </p>
+    <div style="display: flex; gap: 10px; flex-direction: column;">
+      <button class="btn-primary" onclick="openLoginFromWelcome()" style="width: 100%;" id="welcomeBtnLogin" data-translate="btnWelcomeLogin">🔐 Login / Sign Up Karo</button>
+      <button class="btn-secondary" onclick="closeWelcomeModal()" style="width: 100%;" id="welcomeBtnContinue" data-translate="btnWelcomeContinue">💻 Bina Login Ke Shuru Karo</button>
+    </div>
+  </div>
+</div>
+
+<!-- AI Tutor Drawer -->
+<div id="aiDrawer" class="ai-drawer">
+  <div class="ai-drawer-header">
+    <h3 id="aiDrawerTitle">🤖 AI Ustad (Tutor)</h3>
+    <button class="ai-drawer-close" onclick="closeAIDrawer()">✕</button>
+  </div>
+  <div class="ai-chat-history" id="aiChatHistory">
+    <div class="ai-message assistant">
+      Assalam-o-Alaikum! Main aapka Python Tutor (Ustad) hoon. Kisi question mein help chahiye? "AI Ustad se Puchho" button dabayein ya neeche apna sawal likhein!
+    </div>
+  </div>
+  <div class="ai-drawer-input">
+    <input type="text" id="aiInputField" class="ai-input-field" placeholder="Ask a follow-up question..." onkeydown="if(event.key==='Enter') sendUserAIMessage()">
+    <button class="ai-send-btn" onclick="sendUserAIMessage()">Send</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
