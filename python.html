@@ -27,7 +27,7 @@
 
 <div class="header">
   <div class="header-inner">
-    <div class="logo">Py<span>Ustad</span><em>.pk</em></div>
+    <div class="logo">Py<span>Ustad</span><em>.pk</em><span style="font-size: 10px; color: var(--text3); font-weight: normal; margin-left: 8px;">by Ahmad Khan</span></div>
     <div class="nav">
       <button class="nav-btn active" onclick="goPage('home')" data-translate="navHome">🏠 Home</button>
       <button class="nav-btn" onclick="goPage('topics')" data-translate="navTopics">📚 Topics</button>
@@ -106,6 +106,15 @@
       <div class="sidebar-header">
         <span data-translate="questionsHeader">Questions</span>
         <span id="qcount" style="font-size:12px;color:var(--text2)">0 shown</span>
+      </div>
+      <div class="filter-row" style="align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+        <span style="font-size:12px; color:var(--text2)">Limit Qs:</span>
+        <select id="qLimitSelect" onchange="changeQLimit(this.value)" style="padding: 4px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg3); color: var(--text); font-size:12px; outline: none; border-color: var(--border);">
+          <option value="all">All Questions</option>
+          <option value="3">3 Questions</option>
+          <option value="5">5 Questions</option>
+          <option value="10">10 Questions</option>
+        </select>
       </div>
       <div class="filter-row" id="diffFilters">
         <button class="filter-btn active" onclick="filterQ('all',this)" data-translate="filterAll">All</button>
@@ -257,6 +266,10 @@
     <input type="text" id="aiInputField" class="ai-input-field" placeholder="Ask a follow-up question..." onkeydown="if(event.key==='Enter') sendUserAIMessage()">
     <button class="ai-send-btn" onclick="sendUserAIMessage()">Send</button>
   </div>
+</div>
+
+<div class="footer-credit" style="text-align: center; padding: 20px; font-size: 13px; color: var(--text2); border-top: 1px solid var(--border); background: var(--bg2); margin-top: 40px; font-weight: 500;">
+  Developed by <strong style="color: var(--accent);">Ahmad Khan</strong>
 </div>
 
 <script src="script.js"></script>

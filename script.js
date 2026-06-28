@@ -177,31 +177,10 @@ const translations = {
 
 // ===================== DATA =====================
 const topics = [
-  { id:'vars', title:'Variables & Data Types', icon:'📦', level:'basic', desc:'int, float, str, bool, type(), casting. Python 3.14 docs Chapter 3.', easy:4, med:3, hard:2 },
-  { id:'strings', title:'Strings & Methods', icon:'📝', level:'basic', desc:'Slicing, f-strings, upper/lower/strip/split/join/replace. Essential for every program.', easy:5, med:4, hard:3 },
-  { id:'operators', title:'Operators', icon:'➗', level:'basic', desc:'Arithmetic, comparison, logical, bitwise, assignment operators.', easy:4, med:3, hard:2 },
-  { id:'input', title:'User Input & Type Casting', icon:'⌨️', level:'basic', desc:'input() function, int(), float(), str() conversions.', easy:3, med:3, hard:2 },
-  { id:'conditions', title:'Conditions (if/elif/else)', icon:'🔀', level:'basic', desc:'Boolean logic, nested conditions, ternary operator. Python docs Chapter 4.', easy:5, med:4, hard:3 },
-  { id:'loops', title:'Loops (for & while)', icon:'🔁', level:'basic', desc:'for loop, while loop, range(), break, continue, pass, nested loops.', easy:5, med:5, hard:4 },
-  { id:'lists', title:'Lists', icon:'📋', level:'basic', desc:'append, remove, sort, slice, list comprehension. Most important data structure.', easy:4, med:4, hard:3 },
-  { id:'tuples', title:'Tuples & Sets', icon:'🎯', level:'intermediate', desc:'Immutable tuples, unique sets, union/intersection. Python docs Chapter 5.', easy:3, med:3, hard:2 },
-  { id:'dicts', title:'Dictionaries', icon:'📖', level:'intermediate', desc:'Key-value pairs, get(), update(), nested dicts. Very commonly used in real projects.', easy:4, med:4, hard:3 },
-  { id:'functions', title:'Functions', icon:'⚙️', level:'intermediate', desc:'def, return, *args, **kwargs, default params, scope. Python docs Chapter 4.7.', easy:4, med:5, hard:4 },
-  { id:'lambda', title:'Lambda & Higher Order', icon:'λ', level:'intermediate', desc:'lambda, map(), filter(), sorted() with key. Functional programming basics.', easy:3, med:3, hard:3 },
-  { id:'modules', title:'Modules & Packages', icon:'📦', level:'intermediate', desc:'import, from, math, random, datetime, os, sys. Python Standard Library basics.', easy:3, med:3, hard:2 },
-  { id:'fileio', title:'File Handling', icon:'📁', level:'intermediate', desc:'open(), read/write/append, with statement, CSV files. Real-world essential.', easy:3, med:3, hard:3 },
-  { id:'errors', title:'Exception Handling', icon:'🛡️', level:'intermediate', desc:'try/except/finally, raise, custom exceptions. Python docs Chapter 8.', easy:3, med:4, hard:3 },
-  { id:'oop', title:'OOP — Classes & Objects', icon:'🏗️', level:'advanced', desc:'class, __init__, self, methods, class vars. Object-oriented programming basics.', easy:3, med:4, hard:4 },
-  { id:'inherit', title:'Inheritance & Polymorphism', icon:'🧬', level:'advanced', desc:'super(), method overriding, multiple inheritance, polymorphism.', easy:2, med:3, hard:4 },
-  { id:'deco', title:'Decorators', icon:'🎨', level:'advanced', desc:'@decorator, functools, property decorator. Advanced Python feature.', easy:2, med:3, hard:3 },
-  { id:'gen', title:'Generators & Iterators', icon:'⚡', level:'advanced', desc:'yield, next(), iter(), memory-efficient iteration. Python docs Chapter 9.', easy:2, med:3, hard:3 },
-  { id:'comp', title:'Comprehensions', icon:'🚀', level:'advanced', desc:'List, dict, set comprehensions, generator expressions.', easy:3, med:4, hard:3 },
-  { id:'regex', title:'Regular Expressions', icon:'🔍', level:'advanced', desc:'re module, match, search, findall, sub, groups.', easy:2, med:3, hard:3 },
-  { id:'threading', title:'Threading & Async', icon:'🔄', level:'expert', desc:'threading, asyncio, await, async def. Concurrent programming.', easy:1, med:2, hard:3 },
-  { id:'numpy', title:'NumPy Basics', icon:'🔢', level:'expert', desc:'arrays, reshape, math ops, broadcasting. Data science foundation.', easy:2, med:3, hard:3 },
-  { id:'pandas', title:'Pandas', icon:'🐼', level:'expert', desc:'DataFrame, Series, read_csv, groupby, merge. Data analysis tool.', easy:2, med:3, hard:3 },
-  { id:'flask', title:'Flask Web Dev', icon:'🌐', level:'expert', desc:'routes, templates, forms, REST API. Web development with Python.', easy:2, med:3, hard:3 },
-  { id:'algo', title:'Algorithms & DSA', icon:'🧮', level:'expert', desc:'sorting, searching, recursion, Big O. Interview preparation.', easy:2, med:4, hard:5 },
+  { id:'basic', title:'Basics & Variables', icon:'📦', level:'basic', desc:'Variables, data types, inputs, operators, type casting. Python docs Chapter 3.' },
+  { id:'control', title:'Conditions & Loops', icon:'🔀', level:'basic', desc:'if/elif/else conditions, nested loops, break, continue. Python docs Chapter 4.' },
+  { id:'collections', title:'Collections & Strings', icon:'📋', level:'intermediate', desc:'Lists, tuples, dictionaries, sets, string formatting. Python docs Chapter 5.' },
+  { id:'oop_advanced', title:'Functions, OOP & Advanced', icon:'🧬', level:'advanced', desc:'def functions, *args, object-oriented classes, super(), decorators, algorithms. Python docs Chapter 9.' }
 ];
 
 const questions = [
@@ -1061,12 +1040,25 @@ function renderQuestions() {
   renderQList();
 }
 
+let currentLimit = 'all';
+
+function changeQLimit(val) {
+  currentLimit = val;
+  renderQList();
+}
+
 function renderQList() {
   const list = document.getElementById('questionList');
   let qs = questions.filter(q =>
     (currentFilter === 'all' || q.diff === currentFilter) &&
     (currentTopicFilter === 'all' || q.topic === currentTopicFilter)
   );
+  
+  if (currentLimit !== 'all') {
+    const limitNum = parseInt(currentLimit);
+    qs = qs.slice(0, limitNum);
+  }
+  
   document.getElementById('qcount').textContent = `${qs.length} shown`;
   list.innerHTML = qs.map(q => {
     const tp = topics.find(t => t.id === q.topic);
@@ -2058,6 +2050,22 @@ function goPageWithTopic(page, topicId) {
 }
 
 // INIT
+// Remap 40 questions to 4 consolidated topics to achieve >= 10 questions per topic
+questions.forEach(q => {
+  if (q.id >= 1 && q.id <= 10) q.topic = 'basic';
+  else if (q.id >= 11 && q.id <= 20) q.topic = 'control';
+  else if (q.id >= 21 && q.id <= 30) q.topic = 'collections';
+  else if (q.id >= 31 && q.id <= 40) q.topic = 'oop_advanced';
+});
+
+// Calculate easy/medium/hard question counts dynamically for each topic
+topics.forEach(t => {
+  const qs = questions.filter(q => q.topic === t.id);
+  t.easy = qs.filter(q => q.diff === 'easy').length;
+  t.med = qs.filter(q => q.diff === 'medium').length;
+  t.hard = qs.filter(q => q.diff === 'hard').length;
+});
+
 renderTopics();
 renderQuestions();
 renderQuizTopics();
