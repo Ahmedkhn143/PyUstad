@@ -27,7 +27,7 @@
 
 <div class="header">
   <div class="header-inner">
-    <div class="logo">Py<span>Ustad</span><em>.pk</em><span style="font-size: 10px; color: var(--text3); font-weight: normal; margin-left: 8px;">by Ahmad Khan</span></div>
+    <div class="logo">Py<span>Ustad</span></div>
     <div class="nav">
       <button class="nav-btn active" onclick="goPage('home')" data-translate="navHome">🏠 Home</button>
       <button class="nav-btn" onclick="goPage('topics')" data-translate="navTopics">📚 Topics</button>
@@ -151,7 +151,6 @@
         <button class="submit-btn" onclick="submitCode()" data-translate="btnSubmitCode">🚀 Submit & Test</button>
         <button class="hint-btn" onclick="showHint()" data-translate="btnHint">💡 Hint</button>
         <button class="sol-btn" onclick="showSolution()" data-translate="btnSolution">👁️ Solution</button>
-        <button class="sol-btn" onclick="askAI()" data-translate="btnAskAI">🤖 AI Ustad se Puchho</button>
       </div>
       <div class="output-area" id="outputArea" data-translate="outputAreaDefault">Output yahan aayegi...</div>
       <div class="test-results" id="testResults">
@@ -248,23 +247,6 @@
       <button class="btn-primary" onclick="openLoginFromWelcome()" style="width: 100%;" id="welcomeBtnLogin" data-translate="btnWelcomeLogin">🔐 Login / Sign Up Karo</button>
       <button class="btn-secondary" onclick="closeWelcomeModal()" style="width: 100%;" id="welcomeBtnContinue" data-translate="btnWelcomeContinue">💻 Bina Login Ke Shuru Karo</button>
     </div>
-  </div>
-</div>
-
-<!-- AI Tutor Drawer -->
-<div id="aiDrawer" class="ai-drawer">
-  <div class="ai-drawer-header">
-    <h3 id="aiDrawerTitle">🤖 AI Ustad (Tutor)</h3>
-    <button class="ai-drawer-close" onclick="closeAIDrawer()">✕</button>
-  </div>
-  <div class="ai-chat-history" id="aiChatHistory">
-    <div class="ai-message assistant">
-      Assalam-o-Alaikum! Main aapka Python Tutor (Ustad) hoon. Kisi question mein help chahiye? "AI Ustad se Puchho" button dabayein ya neeche apna sawal likhein!
-    </div>
-  </div>
-  <div class="ai-drawer-input">
-    <input type="text" id="aiInputField" class="ai-input-field" placeholder="Ask a follow-up question..." onkeydown="if(event.key==='Enter') sendUserAIMessage()">
-    <button class="ai-send-btn" onclick="sendUserAIMessage()">Send</button>
   </div>
 </div>
 
