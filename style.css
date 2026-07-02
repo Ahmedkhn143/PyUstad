@@ -700,7 +700,7 @@ body {
   background: #10b981;
 }
 
-.code-editor {
+.raw-textarea {
   width: 100%;
   min-height: 250px;
   background: rgba(10, 15, 30, 0.4);
@@ -1282,20 +1282,29 @@ body {
 
 /* CODEMIRROR OVERRIDES - DARK GLASS THEME */
 .CodeMirror {
-  font-family: 'Courier New', Consolas, monospace;
-  font-size: 14.5px;
-  height: 350px;
-  background: rgba(8, 12, 22, 0.6) !important;
+  font-family: 'Fira Code', Consolas, Monaco, 'Courier New', monospace !important;
+  font-size: 15px !important;
+  line-height: 1.8 !important;
+  height: auto !important;
+  min-height: 320px;
+  background: rgba(10, 15, 30, 0.45) !important;
+  border-radius: 8px;
+  border: 1px solid var(--border) !important;
   color: #f8f8f2 !important;
-  border-radius: 0;
-  border-bottom: 1px solid var(--border);
-  line-height: 1.7;
 }
+
 
 .CodeMirror-gutters {
   background: rgba(6, 9, 17, 0.8) !important;
   border-right: 1px solid var(--border) !important;
 }
+
+.CodeMirror-linenumber {
+  color: var(--text3) !important;
+  text-align: right !important;
+  padding-right: 8px !important;
+}
+
 
 /* Specific theme caret styles for cursor visibility */
 .CodeMirror-cursor, 
@@ -1592,28 +1601,4 @@ body {
   }
 }
 
-/* CodeMirror Custom Styles for spacing and readability */
-.CodeMirror {
-  font-family: 'Fira Code', Consolas, Monaco, 'Courier New', monospace !important;
-  font-size: 15px !important;
-  line-height: 1.8 !important;
-  height: auto !important;
-  min-height: 320px;
-  background: rgba(10, 15, 30, 0.45) !important;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-}
-
-.CodeMirror-gutters {
-  background-color: rgba(10, 15, 30, 0.6) !important;
-  border-right: 1px solid var(--border) !important;
-  padding-right: 10px !important;
-}
-
-.CodeMirror-linenumber {
-  padding-left: 12px !important;
-  padding-right: 12px !important;
-  color: var(--text3) !important;
-  text-align: right !important;
-}
 

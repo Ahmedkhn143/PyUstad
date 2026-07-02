@@ -504,6 +504,7 @@ function loadQuestion(id) {
   const initialCode = `# ${titleText}\n# ${cleanDesc}\n\n`;
   if (cmEditor) {
     cmEditor.setValue(initialCode);
+    setTimeout(() => { cmEditor.refresh(); }, 50);
   } else {
     document.getElementById('codeEditor').value = initialCode;
   }
@@ -1423,6 +1424,9 @@ function goPage(page) {
       b.classList.add('active');
     }
   });
+  if (page === 'practice' && cmEditor) {
+    setTimeout(() => { cmEditor.refresh(); }, 50);
+  }
 }
 function goPageWithTopic(page, topicId) {
   goPage(page);
