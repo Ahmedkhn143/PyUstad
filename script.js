@@ -177,10 +177,18 @@ const translations = {
 
 // ===================== DATA =====================
 const topics = [
-  { id:'basic', title:'Basics & Variables', icon:'📦', level:'basic', desc:'Variables, data types, inputs, operators, type casting. Python docs Chapter 3.' },
-  { id:'control', title:'Conditions & Loops', icon:'🔀', level:'basic', desc:'if/elif/else conditions, nested loops, break, continue. Python docs Chapter 4.' },
-  { id:'collections', title:'Collections & Strings', icon:'📋', level:'intermediate', desc:'Lists, tuples, dictionaries, sets, string formatting. Python docs Chapter 5.' },
-  { id:'oop_advanced', title:'Functions, OOP & Advanced', icon:'🧬', level:'advanced', desc:'def functions, *args, object-oriented classes, super(), decorators, algorithms. Python docs Chapter 9.' }
+  { id: 'vars', title: 'Variables', icon: '📦', level: 'basic', desc: 'Variables, data types (int, float, bool, string), type casting, and basic operations.' },
+  { id: 'strings', title: 'Strings', icon: '🔤', level: 'basic', desc: 'String operations, indexing, slicing, formatting, and common string methods.' },
+  { id: 'conditions', title: 'Conditions', icon: '🔀', level: 'basic', desc: 'Conditional execution using if, elif, and else blocks for decision making.' },
+  { id: 'loops', title: 'Loops', icon: '🔁', level: 'basic', desc: 'Iterating code using for and while loops, break, and continue statements.' },
+  { id: 'lists', title: 'Lists', icon: '📋', level: 'intermediate', desc: 'Lists and tuples operations, list slicing, modification, sorting, and indexing.' },
+  { id: 'dicts', title: 'Dictionaries', icon: '📖', level: 'intermediate', desc: 'Working with key-value pairs (dictionaries) and unique collections (sets).' },
+  { id: 'functions', title: 'Functions', icon: '⚙️', level: 'intermediate', desc: 'Defining functions, passing arguments (*args, **kwargs), return values, and scopes.' },
+  { id: 'oop', title: 'OOP', icon: '🧬', level: 'advanced', desc: 'Object-Oriented Programming basics, creating classes, instantiating objects, and constructors.' },
+  { id: 'inherit', title: 'Inheritance', icon: '🌳', level: 'advanced', desc: 'Class inheritance, method overriding, super() function, and polymorphism.' },
+  { id: 'fileio', title: 'File I/O', icon: '📂', level: 'advanced', desc: 'Reading and writing text files safely using Python context managers.' },
+  { id: 'algo', title: 'Algorithms', icon: '🧠', level: 'expert', desc: 'Problem solving with search algorithms, sorting, recursion, and complexity.' },
+  { id: 'errors', title: 'Errors', icon: '⚠️', level: 'intermediate', desc: 'Handling exceptions using try/except blocks.' }
 ];
 
 const questions = [
@@ -2050,14 +2058,6 @@ function goPageWithTopic(page, topicId) {
 }
 
 // INIT
-// Remap 40 questions to 4 consolidated topics to achieve >= 10 questions per topic
-questions.forEach(q => {
-  if (q.id >= 1 && q.id <= 10) q.topic = 'basic';
-  else if (q.id >= 11 && q.id <= 20) q.topic = 'control';
-  else if (q.id >= 21 && q.id <= 30) q.topic = 'collections';
-  else if (q.id >= 31 && q.id <= 40) q.topic = 'oop_advanced';
-});
-
 // Calculate easy/medium/hard question counts dynamically for each topic
 topics.forEach(t => {
   const qs = questions.filter(q => q.topic === t.id);
